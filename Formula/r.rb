@@ -94,6 +94,20 @@ class R < Formula
     ln_s site_library, lib/"R/site-library"
   end
 
+  def caveats
+    on_macos do
+      <<~EOS
+        This installation of R does not use binary packages from CRAN.
+        Instead it will install packages from source which will require additional system
+        dependencies and longer install times.
+
+        If you are installing packages from CRAN it is highly recommended that you
+        instead install R with:
+          brew install --cask r
+      EOS
+    end
+  end
+
   test do
     assert_equal "[1] 2", shell_output("#{bin}/Rscript -e 'print(1+1)'").chomp
     assert_equal ".dylib", shell_output("#{bin}/R CMD config DYLIB_EXT").chomp
